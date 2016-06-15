@@ -94,14 +94,8 @@
 			// console.log(dataArr);
 			var max = dataArr.length,
                 template = [],
-                clientWidth = this.conWidth,
+                contentWidth = this.conWidth,
                 _this = this;
-
-            var MIN_RATE = 0.7, //最小宽高比
-                MIN_RATE_1 = 3 / 4, //1行只有1张图的最小宽高比
-                MIN_RATE_2 = 6 / 4, //2张图的最小宽高比
-                MAX_RATE_1 = 16 / 9, //1张图的最大宽高比
-                MAX_RATE_2 = 32 / 9; //2张图的最大宽高比
 
             for (var i = 0; i < max; i += 2) {
             	template.push(countPicList(dataArr[i], dataArr[i+1]));
@@ -109,43 +103,21 @@
 
 			function countPicList(pic1, pic2) {
 
-                var maxHeight,minHeight,h,sWidth;
-
                 if (!pic2) { //一行一张
-                    sWidth = clientWidth;
-                    maxHeight = sWidth / MIN_RATE_1;
-                    minHeight = sWidth / MAX_RATE_1;
-                    var rate = _this._countRate(pic1.width, pic1.height);
-                    h = sWidth / rate;
-                    h = h < minHeight ? minHeight : h;
-                    h = h > maxHeight ? maxHeight : h;
-                    return '<div class="wf-item" style="height: '+h+'px; width: 100%; float: left; margin-top: 3px;background-image:url('+pic1.picUrl+')"></div>';
+                    var rate = _this._countRate(pic1.width, pic1.height),
+                    	height = 100 * rate + '%';
+                    return '<div class="wf-item" style="padding-bottom:'+height+'; width:100%; background-image:url('+pic1.picUrl+')"></div>';
                 } else { //一行两张
-                    sWidth = clientWidth * 0.98;
-                    maxHeight = sWidth / MIN_RATE_2;
-                    minHeight = sWidth / MAX_RATE_2;
                     var rate1 = _this._countRate(pic1.width, pic1.height),
-                        rate2 = _this._countRate(pic2.width, pic2.height),
-                        totalRate = rate1 + rate2,
-                        totalWidth = pic1.width + pic2.width,
-                        w1 = rate1 / totalRate * sWidth,
-                        w2 = rate2 / totalRate * sWidth;
-                    h = sWidth / totalRate;
-                    h = h < minHeight ? minHeight : h;
-                    h = h > maxHeight ? maxHeight : h;
-                    var minWidth = MIN_RATE * h;
-                    if (w1 < minWidth) {
-                        w2 = w2 - (minWidth - w1);
-                        w1 = minWidth;
-                    } else if (w2 < minWidth) {
-                        w1 = w1 - (minWidth - w2);
-                        w2 = minWidth;
-                    }
-                    w1 = w1 / clientWidth * 100 + '%';
-                    w2 = w2 / clientWidth * 100 + '%';
+                    	rate2 = _this._countRate(pic2.width, pic2.height),
+                    	totalRate = rate1 + rate2,
+                    	width1 = rate2 / totalRate * 98 ,
+                    	width2 = rate1 / totalRate * 98,
+                    	height = width1 * rate1;
+
 					return '<div style="overflow: hidden;">' +
-	                       		'<div class="wf-item" style="height: '+h+'px; width: '+w1+'; margin-right:2%; background-image:url('+pic1.picUrl+')"></div>' +
-	                            '<div class="wf-item" style="height: '+h+'px; width: '+w2+'; background-image:url('+pic2.picUrl+')"></div>' +
+	                       		'<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width1+'%; margin-right:2%; background-image:url('+pic1.picUrl+')"></div>' +
+	                            '<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width2+'%; background-image:url('+pic2.picUrl+')"></div>' +
 	                       '</div>';
                 }
             }
