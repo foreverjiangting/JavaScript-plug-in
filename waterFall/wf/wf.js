@@ -113,12 +113,11 @@
                     	totalRate = rate1 + rate2,
                     	width1 = rate2 / totalRate * 98 ,
                     	width2 = rate1 / totalRate * 98,
-                    	height1 = width1 * rate1,
-                    	height2 = width2 * rate2;
+                    	height = width1 * rate1;
 
 					return '<div style="overflow: hidden;">' +
-	                       		'<div class="wf-item" style="padding-bottom:'+height1+'%; width:'+width1+'%; margin-right:2%; background-image:url('+pic1.picUrl+')"></div>' +
-	                            '<div class="wf-item" style="padding-bottom:'+height2+'%; width:'+width2+'%; background-image:url('+pic2.picUrl+')"></div>' +
+	                       		'<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width1+'%; margin-right:2%; background-image:url('+pic1.picUrl+')"></div>' +
+	                            '<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width2+'%; background-image:url('+pic2.picUrl+')"></div>' +
 	                       '</div>';
                 }
             }

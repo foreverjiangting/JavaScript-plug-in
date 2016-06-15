@@ -2,7 +2,6 @@
  * Created by Administrator on 2015/10/25.
  */
 $(function() {
-
 	var dataArr = [
 		{picUrl: './resource/images/dota-4.jpg', width: 480, height: 800},
 		{picUrl: './resource/images/dota-15.jpg', width: 500, height: 311},
@@ -47,5 +46,4 @@ $(function() {
 		});
 		wtf.create(dataArr);
 	};
-
 });
