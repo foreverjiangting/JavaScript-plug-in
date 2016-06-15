@@ -26,7 +26,7 @@ $(function() {
 		{picUrl: './resource/images/dota-22.jpg', width: 1024, height: 640},
 		{picUrl: './resource/images/dota-23.jpg', width: 720, height: 450},
 		{picUrl: './resource/images/dota-3.jpg', width: 480, height: 800},
-		// {picUrl: './resource/images/dota-1.jpg', width: 700, height: 381},
+		{picUrl: './resource/images/dota-1.jpg', width: 700, height: 381},
 		{picUrl: './resource/images/dota-24.jpg', width: 800, height: 500}
 	];
 
