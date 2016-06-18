@@ -5,7 +5,10 @@
 		this.ele = this._selector(ele);
 		this.conWidth = this.ele.offsetWidth;
 		this.defaults = {
-			type: 1
+			type: 1,
+			urlField: 'url',
+			widthField: 'width',
+			heightField: 'height'
 		};
 		this.opts = this._extend({}, this.defaults, opts);
 	}
@@ -48,8 +51,9 @@
 
 		createFirst: function(dataArr) {
 			// console.log(dataArr);
-			var result = dataArr.map(function(item, index) {
-				return '<div class="wf-item wf-item-1" style="background-image: url('+item.picUrl+');"></div>';
+			var _this = this,
+				result = dataArr.map(function(item, index) {
+				return '<div class="wf-item wf-item-1" style="background-image: url('+item[_this.opts.urlField]+');"></div>';
 			});
 			return result.join('');
 		},
@@ -57,8 +61,8 @@
 		createSecond: function(dataArr) {
 			var _this = this,
 				result = dataArr.map(function(item, index) {
-					var height = _this._countRate(item.width, item.height) * 47 + '%';
-					return '<div class="wf-item wf-item-2" style="padding-bottom: '+height+';background-image: url('+item.picUrl+');"></div>';
+					var height = _this._countRate(item[_this.opts.widthField], item[_this.opts.heightField]) * 47 + '%';
+					return '<div class="wf-item wf-item-2" style="padding-bottom: '+height+';background-image: url('+item[_this.opts.urlField]+');"></div>';
 				});
 			return result.join('');
 		},
@@ -104,20 +108,20 @@
 			function countPicList(pic1, pic2) {
 
                 if (!pic2) { //一行一张
-                    var rate = _this._countRate(pic1.width, pic1.height),
+                    var rate = _this._countRate(pic1[_this.opts.widthField], pic1[_this.opts.heightField]),
                     	height = 100 * rate + '%';
-                    return '<div class="wf-item" style="padding-bottom:'+height+'; width:100%; background-image:url('+pic1.picUrl+')"></div>';
+                    return '<div class="wf-item" style="padding-bottom:'+height+'; width:100%; background-image:url('+pic1[_this.opts.urlField]+')"></div>';
                 } else { //一行两张
-                    var rate1 = _this._countRate(pic1.width, pic1.height),
-                    	rate2 = _this._countRate(pic2.width, pic2.height),
+                    var rate1 = _this._countRate(pic1[_this.opts.widthField], pic1[_this.opts.heightField]),
+                    	rate2 = _this._countRate(pic2[_this.opts.widthField], pic2[_this.opts.heightField]),
                     	totalRate = rate1 + rate2,
-                    	width1 = rate2 / totalRate * 98 ,
+                    	width1 = rate2 / totalRate * 98,
                     	width2 = rate1 / totalRate * 98,
                     	height = width1 * rate1;
 
 					return '<div style="overflow: hidden;">' +
-	                       		'<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width1+'%; margin-right:2%; background-image:url('+pic1.picUrl+')"></div>' +
-	                            '<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width2+'%; background-image:url('+pic2.picUrl+')"></div>' +
+	                       		'<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width1+'%; background-image:url('+pic1[_this.opts.urlField]+')"></div>' +
+	                            '<div class="wf-item" style="padding-bottom:'+height+'%; width:'+width2+'%; float:right; background-image:url('+pic2[_this.opts.urlField]+')"></div>' +
 	                       '</div>';
                 }
             }
@@ -139,7 +143,7 @@
 				}
 				if (i !== 0) {
 					for (var o in args[i]) {
-						obj[o] = args[i][o];
+						if (args[i].hasOwnProperty(o)) obj[o] = args[i][o];
 					}
 				} else {
 					obj = args[0];

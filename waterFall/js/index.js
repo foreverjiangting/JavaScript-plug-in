@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/10/25.
  */
-$(function() {
+window.onload = function() {
 	var dataArr = [
 		{picUrl: './resource/images/dota-4.jpg', width: 480, height: 800},
 		{picUrl: './resource/images/dota-15.jpg', width: 500, height: 311},
@@ -29,21 +29,24 @@ $(function() {
 		{picUrl: './resource/images/dota-22.jpg', width: 1024, height: 640}
 	];
 
-	var listType = 1;
+	var listType = 1,
+		bannerDom = document.getElementsByClassName('banner')[0],
+		contentDom = document.getElementsByClassName('content')[0];
 
 	showList();
-	
-	$('.banner').on('click', function() {
+
+	bannerDom.onclick = function() {
 		listType ++;
 		if (listType > 3) listType = 1;
 		showList();
-	});
+	}
 
 	function showList() {
-		$('.content').html('');
+		contentDom.innerHTML = '';
 		var wtf = new WaterFull('.content', {
-			type: listType
+			type: listType,
+			urlField: 'picUrl'
 		});
 		wtf.create(dataArr);
 	};
-});
+};
